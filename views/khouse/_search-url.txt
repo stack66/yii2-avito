@@ -1,0 +1,1 @@
+localhost/av/web/index.php?KhouseSearch[obj]=&KhouseSearch[floor]=&KhouseSearch[floors]=&KhouseSearch[m2]=&KhouseSearch[region]=&KhouseSearch[addr]=&KhouseSearch[price]=&KhouseSearch[date]=&KhouseSearch[last_updated]=&KhouseSearch[tel]=&r=khouse/index&page=2

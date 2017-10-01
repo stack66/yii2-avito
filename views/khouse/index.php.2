@@ -1,0 +1,102 @@
+<?php
+
+use yii\helpers\Html;
+use yii\helpers\Url;
+use yii\bootstrap\ActiveForm;
+use yii\widgets\Pjax;
+use yii\grid\GridView; 
+/*use kartik\grid\GridView;*/
+/* @var $this yii\web\View */
+/* @var $searchModel app\models\KhouseSearch */
+/* @var $dataProvider yii\data\ActiveDataProvider */
+
+$this->title = Yii::t('app', 'Список объектов');
+$this->params['breadcrumbs'][] = $this->title;
+yii\helpers\Url::remember();
+?>
+<div class="khouse-index">
+
+    <h1><?= Html::encode($this->title) ?></h1>
+    <?php //echo $this->render('_search', ['model' => $searchModel]); ?>
+
+    <p>
+        <?= Html::a(Yii::t('app', 'Создать объект'), ['create'], ['class' => 'btn btn-default']) ?>
+            <?php \yii\bootstrap\Modal::begin([
+            'id' => 'search',
+             'size' => 'SIZE_LARGE',
+             'header' => ' <h4>Поиск объекта</h4>',
+            'closeButton' => ['tag' => 'button', 'label' => '&times;'],
+            'toggleButton' => [
+                'label' => 'Поиск',
+                'data-target' => '#search',
+                'class' => 'btn btn-default',
+             //   'href' => Url::toRoute(['search?...', 'partyID'=> $model->id]),
+            ],
+            
+            'clientOptions' => false,
+        ]); ?>
+        <?php echo "<h4>Форма поиска</h4>" ?>
+        <?php $form = ActiveForm::begin([
+        'action' => ['index'],
+        'method' => 'get',
+        ]); ?>
+        <?= $form->field($searchModel, 'id') ?>
+        <?= $form->field($searchModel, 'obj')->dropDownList([
+        '0' => '',
+        '1' => '1-к Квартира',
+        '2' => '2-к Квартира',
+        '3' => '3-к Квартира',
+        '4' => '4-к Квартира',
+        '5' => '5-к Квартира',
+        '6' => 'Гостинка',
+        '7' => 'Комната',
+        '8' => 'Дом',
+        '9' => 'Земли'
+        ]);?>
+     <?=    $form->field($searchModel, 'region')->dropDownList([
+    '0' => '',
+    '1' => 'Авиастроительный',
+    '2' => 'Вахитовский',
+    '3' => 'Кировский',
+    '4'=>'Московский',
+    '5' => 'Ново-Савиновский',
+    '6'=> 'Приволжский',
+    '7' => 'Советский'
+    ]);?>
+        <?php ActiveForm::end(); ?>
+        <?php \yii\bootstrap\Modal::end(); ?>
+
+    </p>
+    </div>
+    <?php Pjax::begin(); ?>
+    <?= GridView::widget([
+        'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
+        'columns' => [
+            
+            ['class' => 'yii\grid\SerialColumn'],
+            
+            //'id',
+            'obj:ntext',
+            'floor',
+            'floors',
+            'm2',
+             'region:ntext',
+             'addr:ntext',
+             'price',
+//             'link_show_obj',
+//             'descr:ntext',
+               'date',
+             'last_updated:ntext',
+             'tel',
+
+            ['class' => '\yii\grid\ActionColumn'],
+        ],
+        'pager' => [
+        'firstPageLabel' => 'Первая',
+        'lastPageLabel'  => 'Последняя'
+    ]
+
+    ]); ?>
+    <?php Pjax::end(); ?>
+</div>

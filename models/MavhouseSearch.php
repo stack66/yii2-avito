@@ -1,0 +1,87 @@
+<?php
+
+namespace app\models;
+
+use Yii;
+use yii\base\Model;
+use yii\data\ActiveDataProvider;
+use app\models\Mavhouse;
+
+/**
+ * MavhouseSearch represents the model behind the search form about `app\models\Mavhouse`.
+ */
+class MavhouseSearch extends Mavhouse
+{
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return [
+            [['id', 'lastrowid'], 'integer'],
+            [['obj', 'addr', 'region', 'price', 'm2', 'floor', 'floors', 'links', 'descr', 'date', 'date1', 'last_updated', 'tel', 'linkimg'], 'safe'],
+        ];
+    }
+    public $min_price;
+    public $max_price;
+
+    /**
+     * @inheritdoc
+     */
+    public function scenarios()
+    {
+        // bypass scenarios() implementation in the parent class
+        return Model::scenarios();
+    }
+
+    /**
+     * Creates data provider instance with search query applied
+     *
+     * @param array $params
+     *
+     * @return ActiveDataProvider
+     */
+    public function search($params)
+    {
+        $query = Mavhouse::find();
+
+        // add conditions that should always apply here
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+			'sort'=> ['defaultOrder' => ['date' => SORT_DESC]]
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        // grid filtering conditions
+        $query->andFilterWhere([
+            'id' => $this->id,
+            'date' => $this->date,
+            'date1' => $this->date1,
+            'lastrowid' => $this->lastrowid,
+        ]);
+
+        $query->andFilterWhere(['like', 'obj', $this->obj])
+            ->andFilterWhere(['like', 'addr', $this->addr])
+            ->andFilterWhere(['like', 'region', $this->region])
+//            ->andFilterWhere(['like', 'price', $this->price])
+            ->andFilterWhere(['between', 'price', $this->min_price, $this->max_price])
+            ->andFilterWhere(['like', 'm2', $this->m2])
+            ->andFilterWhere(['like', 'floor', $this->floor])
+            ->andFilterWhere(['like', 'floors', $this->floors])
+            ->andFilterWhere(['like', 'links', $this->links])
+            ->andFilterWhere(['like', 'descr', $this->descr])
+            ->andFilterWhere(['like', 'last_updated', $this->last_updated])
+            ->andFilterWhere(['like', 'tel', $this->tel])
+            ->andFilterWhere(['like', 'linkimg', $this->linkimg]);
+
+        return $dataProvider;
+    }
+}

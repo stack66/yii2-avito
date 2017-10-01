@@ -1,0 +1,81 @@
+<?php
+
+namespace app\models;
+
+use Yii;
+
+/**
+ * This is the model class for table "mavobj".
+ *
+ * @property integer $id
+ * @property string $obj
+ * @property string $addr
+ * @property string $region
+ * @property integer $price
+ * @property string $m2
+ * @property string $floor
+ * @property string $floors
+ * @property string $links
+ * @property string $descr
+ * @property string $date
+ * @property string $date1
+ * @property string $last_updated
+ * @property string $tel
+ * @property string $linkimg
+ */
+class Mavobj extends \yii\db\ActiveRecord
+{
+    /**
+     * @inheritdoc
+     */
+    public static function tableName()
+    {
+        return 'mavobj';
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return [
+            [['obj', 'addr', 'region', 'm2', 'floor', 'floors', 'links', 'descr', 'last_updated', 'linkimg'], 'string'],
+            [['price'], 'integer'],
+            [['date', 'date1'], 'safe'],
+            [['tel'], 'string', 'max' => 15],
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => Yii::t('app', 'ID'),
+            'obj' => Yii::t('app', 'Obj'),
+            'addr' => Yii::t('app', 'Addr'),
+            'region' => Yii::t('app', 'Region'),
+            'price' => Yii::t('app', 'Price'),
+            'm2' => Yii::t('app', 'M2'),
+            'floor' => Yii::t('app', 'Floor'),
+            'floors' => Yii::t('app', 'Floors'),
+            'links' => Yii::t('app', 'Links'),
+            'descr' => Yii::t('app', 'Descr'),
+            'date' => Yii::t('app', 'Date'),
+            'date1' => Yii::t('app', 'Date1'),
+            'last_updated' => Yii::t('app', 'Last Updated'),
+            'tel' => Yii::t('app', 'Tel'),
+            'linkimg' => Yii::t('app', 'Linkimg'),
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     * @return MavobjQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new MavobjQuery(get_called_class());
+    }
+}

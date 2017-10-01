@@ -1,0 +1,83 @@
+<?php
+
+namespace app\models;
+
+use Yii;
+
+/**
+ * This is the model class for table "mavhouse".
+ *
+ * @property integer $id
+ * @property string $obj
+ * @property string $addr
+ * @property string $region
+ * @property string $price
+ * @property string $m2
+ * @property string $floor
+ * @property string $floors
+ * @property string $links
+ * @property string $descr
+ * @property string $date
+ * @property string $date1
+ * @property string $last_updated
+ * @property string $tel
+ * @property string $linkimg
+ * @property integer $lastrowid
+ */
+class Mavhouse extends \yii\db\ActiveRecord
+{
+    /**
+     * @inheritdoc
+     */
+    public static function tableName()
+    {
+        return 'mavhouse';
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return [
+            [['obj', 'addr', 'region', 'price', 'm2', 'floor', 'floors', 'links', 'descr', 'last_updated', 'linkimg'], 'string'],
+            [['date', 'date1'], 'safe'],
+            [['lastrowid'], 'integer'],
+            [['tel'], 'string', 'max' => 15],
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => Yii::t('app', 'ID'),
+            'obj' => Yii::t('app', 'Obj'),
+            'addr' => Yii::t('app', 'Addr'),
+            'region' => Yii::t('app', 'Region'),
+            'price' => Yii::t('app', 'Price'),
+            'm2' => Yii::t('app', 'M2'),
+            'floor' => Yii::t('app', 'Floor'),
+            'floors' => Yii::t('app', 'Floors'),
+            'links' => Yii::t('app', 'Links'),
+            'descr' => Yii::t('app', 'Descr'),
+            'date' => Yii::t('app', 'Date'),
+            'date1' => Yii::t('app', 'Date1'),
+            'last_updated' => Yii::t('app', 'Last Updated'),
+            'tel' => Yii::t('app', 'Tel'),
+            'linkimg' => Yii::t('app', 'Linkimg'),
+            'lastrowid' => Yii::t('app', 'Lastrowid'),
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     * @return MavhouseQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new MavhouseQuery(get_called_class());
+    }
+}

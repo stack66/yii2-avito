@@ -1,0 +1,53 @@
+<?php
+
+use yii\helpers\Html;
+/*use yii\grid\GridView; */
+use kartik\grid\GridView;
+/* @var $this yii\web\View */
+/* @var $searchModel app\models\KhouseSearch */
+/* @var $dataProvider yii\data\ActiveDataProvider */
+
+$this->title = Yii::t('app', 'Список объектов');
+$this->params['breadcrumbs'][] = $this->title;
+yii\helpers\Url::remember();
+?>
+<div class="khouse-index">
+
+    <h1><?= Html::encode($this->title) ?></h1>
+    <?php echo $this->render('_search', ['model' => $searchModel]); ?>
+
+    <p>
+        <?= Html::a(Yii::t('app', 'Создать объект'), ['create'], ['class' => 'btn btn-success']) ?>
+    </p>
+    <?= \kartik\grid\GridView::widget([
+        'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
+        'columns' => [
+            //['class' => 'yii\grid\SerialColumn'],
+            ['class' => 'kartik\grid\SerialColumn'],
+            
+            //'id',
+            'obj:ntext',
+            'floor',
+            'floors',
+            'm2',
+             'region:ntext',
+             'addr:ntext',
+             'price',
+//             'link_show_obj',
+//             'descr:ntext',
+               'date',
+             'last_updated:ntext',
+             'tel',
+
+            ['class' => 'yii\grid\ActionColumn'],
+        ],
+'pager' => [
+        'firstPageLabel' => 'Первая',
+        'lastPageLabel'  => 'Последняя'
+    ],
+        'resizableColumns'=>true,
+        'floatHeader'=>true,
+        'hover'=>true
+    ]); ?>
+</div>
